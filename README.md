@@ -6,5 +6,9 @@ A Github client built with Angular 2
 
 ## Continuous Deployment
 
-Execute `node continuous-deployment.js` to start a server at port 3000 to
+```
+$ su www-data
+$ node continuous-deployment.js
+```
+Starts a server at port 3000 to
 respond to changes from `master`.
