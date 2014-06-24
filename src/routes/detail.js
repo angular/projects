@@ -2,7 +2,7 @@ import {Router} from 'router';
 import {ComponentDirective} from 'templating';
 import {GhService} from 'services';
 
-@ComponentDirective
+@ComponentDirective({selector:'detail'})
 export class Detail {
   constructor(router:Router, service:GhService) {
     this.router = router;

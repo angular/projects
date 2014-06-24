@@ -1,7 +1,7 @@
 import {ComponentDirective} from 'templating';
 import {GhService} from 'services';
 
-@ComponentDirective
+@ComponentDirective({selector:'overview'})
 export class Overview {
   constructor(service:GhService) {
     this.service = service;

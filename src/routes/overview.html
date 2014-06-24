@@ -4,10 +4,10 @@
       <th>Number</th>
       <th>Title</th>
     </tr>
-    <tr ng-repeat bind-ng-repeat="issues">
-      <td>{{row.number}}</td>
+    <tr ng-repeat bind-ng-repeat="issues" class="tst-issue">
+      <td class="tst-issue-number">{{row.number}}</td>
       <td>
-        <a href="#/issues/{{row.number}}">{{row.title}}</a>
+        <a href="#/issues/{{row.number}}" class="tst-issue-link">{{row.title}}</a>
       </td>
     </tr>
   </table>

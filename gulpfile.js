@@ -3,10 +3,13 @@ var pipe = require('pipe/gulp');
 var connect = require('gulp-connect');
 var traceur = require('gulp-traceur');
 var through = require('through2');
+var ConfigParser = require('protractor/lib/configParser');
+var Runner = require('protractor/lib/runner');
 
 var path = {
   src: ['./src/**/*.js'],
   srcCopy: ['./src/**/*.html', './src/**/*.css'],
+  test: ['./test/**/*.js'],
   deps: {
     'watchtower': './node_modules/watchtower/src/**/*.js',
     'expressionist': './node_modules/expressionist/src/**/*.js',
@@ -25,7 +28,8 @@ var path = {
     './bower_components/bootstrap/dist/css/bootstrap.min.css',
     './bower_components/font-awesome/css/font-awesome.min.css'
   ],
-  output: 'dist'
+  output: 'dist',
+  outputTest: 'dist_test'
 };
 
 gulp.task('build_source', function() {
@@ -35,6 +39,13 @@ gulp.task('build_source', function() {
   gulp.src(path.srcCopy)
       .pipe(gulp.dest(path.output));
 });
+
+gulp.task('build_test', function() {
+  gulp.src(path.test)
+      .pipe(traceur(pipe.traceur({modules: 'inline', asyncFunctions: true})))
+      .pipe(gulp.dest(path.outputTest));
+});
+
 
 gulp.task('build_deps', function() {
   for (var prop in path.deps) {
@@ -46,12 +57,13 @@ gulp.task('build_deps', function() {
         .pipe(gulp.dest(path.output+'/lib/'));
 });
 
-gulp.task('build', ['build_source', 'build_deps']);
+gulp.task('build', ['build_source', 'build_deps', 'build_test']);
 
 
 // WATCH FILES FOR CHANGES
 gulp.task('watch', function() {
   gulp.watch([path.src, path.srcCopy], ['build_source']);
+  gulp.watch([path.test], ['build_test']);
   var deps = [];
   for (var prop in path.deps) {
     deps.push(path.deps[prop]);
@@ -67,3 +79,15 @@ gulp.task('serve', connect.server({
   open: false
 }));
 
+gulp.task('e2e', ['serve'], function() {
+  var configParser = new ConfigParser();
+  configParser.addFileConfig('protractor.conf.js');
+  var config = configParser.getConfig();
+  config.specs = ['dist_test/**/*.js'];
+  var runner = new Runner(config);
+  runner.run().then(function(exitCode) {
+    // TODO
+  }).catch(function(err) {
+    // TODO
+  });
+});

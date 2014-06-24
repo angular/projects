@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+  - "0.10"
+
+env:
+  global:
+    - SAUCE_USERNAME=angular-ci
+    - SAUCE_ACCESS_KEY=9b988f434ff8-fbca-8aa4-4ae3-35442987
+    - LOGS_DIR=/tmp/protractor-build/logs
+    - BROWSER_PROVIDER_READY_FILE=/tmp/sauce-connect-ready
+
+before_script:
+  - mkdir -p $LOGS_DIR
+  - npm install -g gulp-cli
+  - npm install -g bower
+  - bower install
+  - ./scripts/sauce_connect_setup.sh
+  - ./scripts/wait_for_browser_provider.sh
+
+script:
+  - ./scripts/testonsauce.sh
+
+after_script:
+  - ./scripts/print_logs.sh
