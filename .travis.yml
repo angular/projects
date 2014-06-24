@@ -11,7 +11,6 @@ env:
 
 before_script:
   - mkdir -p $LOGS_DIR
-  - npm install -g gulp-cli
   - ./node_modules/.bin/bower install
   - ./scripts/sauce_connect_setup.sh
   - ./scripts/wait_for_browser_provider.sh
