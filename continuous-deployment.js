@@ -1,2 +1,2 @@
 var hookshot = require('hookshot');
-hookshot('refs/heads/master', 'git pull --rebase').listen(3000);
+hookshot('refs/heads/dist', 'git fetch origin dist && git checkout dist -f').listen(3000);
