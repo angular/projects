@@ -6,12 +6,12 @@ function killServer () {
   kill $serverPid
 }
 
-gulp build
-gulp serve &
+./node_modules/.bin/gulp build
+./node_modules/.bin/gulp serve &
 serverPid=$!
 
 trap killServer EXIT
 
 SAUCE_ACCESS_KEY=`echo $SAUCE_ACCESS_KEY | rev`
 
-protractor protractor.conf.js
+./node_modules/.bin/protractor protractor.conf.js

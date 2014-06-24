@@ -18,6 +18,7 @@ respond to changes from `master`.
 1. Install [NodeJS](http://nodejs.org/)
 2. `npm install -g gulp`
 3. `npm install -g bower`
+3. `npm install -g protractor`
 3. `npm install`
 4. `bower install`
 
@@ -26,10 +27,11 @@ respond to changes from `master`.
 1. `gulp build watch serve`
 2. open [http://localhost:8000/](http://localhost:8000/)
 
-## Development
+## Running e2e tests locally
 
 1. Start the server: `gulp build watch serve`
-1. Run protractor e2e tests: `protractor protractor.conf.js`
+1. Start the selenium server: `webdriver-manager start`
+1. `protractor protractor.conf.js`
 
 ### Code Style Guide
 
