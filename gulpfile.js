@@ -5,8 +5,7 @@ var traceur = require('gulp-traceur');
 var through = require('through2');
 
 var path = {
-  src: ['./src/**/*.js', '!./src/**/*.inline.js'],
-  srcInline: ['./src/**/*.inline.js'],
+  src: ['./src/**/*.js'],
   srcCopy: ['./src/**/*.html', './src/**/*.css'],
   deps: {
     'watchtower': './node_modules/watchtower/src/**/*.js',
@@ -33,9 +32,6 @@ gulp.task('build_source', function() {
   gulp.src(path.src)
       .pipe(traceur(pipe.traceur()))
       .pipe(gulp.dest(path.output));
-  gulp.src(path.srcInline)
-      .pipe(traceur(pipe.traceur({modules: 'inline'})))
-      .pipe(gulp.dest(path.output));
   gulp.src(path.srcCopy)
       .pipe(gulp.dest(path.output));
 });
@@ -55,7 +51,7 @@ gulp.task('build', ['build_source', 'build_deps']);
 
 // WATCH FILES FOR CHANGES
 gulp.task('watch', function() {
-  gulp.watch([path.src, path.srcInline, path.srcCopy], ['build_source']);
+  gulp.watch([path.src, path.srcCopy], ['build_source']);
   var deps = [];
   for (var prop in path.deps) {
     deps.push(path.deps[prop]);
