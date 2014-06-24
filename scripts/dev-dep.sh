@@ -9,7 +9,7 @@ cd $SCRIPT_DIR/..
 if [ -L ./node_modules/$DEP_NAME ]; then
   echo "$DEP_NAME is already a symlink"
 else
-  PKG_INFO=($(./read-pkg-url.js ./node_modules/$DEP_NAME/package.json))
+  PKG_INFO=($($SCRIPT_DIR/read-pkg-url.js ./node_modules/$DEP_NAME/package.json))
   URL=${PKG_INFO[0]}
   DIR_NAME=${PKG_INFO[1]}
 
