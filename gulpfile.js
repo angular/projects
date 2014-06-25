@@ -5,6 +5,8 @@ var traceur = require('gulp-traceur');
 var through = require('through2');
 var ConfigParser = require('protractor/lib/configParser');
 var Runner = require('protractor/lib/runner');
+var map = require('map-stream');
+var noop = function() {};
 
 var path = {
   src: ['./src/**/*.js'],
@@ -35,15 +37,18 @@ var path = {
 gulp.task('build_source', function() {
   gulp.src(path.src)
       .pipe(traceur(pipe.traceur()))
-      .pipe(gulp.dest(path.output));
+      .pipe(gulp.dest(path.output))
+      .pipe(map(noop));
   gulp.src(path.srcCopy)
-      .pipe(gulp.dest(path.output));
+      .pipe(gulp.dest(path.output))
+      .pipe(map(noop));
 });
 
 gulp.task('build_test', function() {
   gulp.src(path.test)
       .pipe(traceur(pipe.traceur({modules: 'inline', asyncFunctions: true})))
-      .pipe(gulp.dest(path.outputTest));
+      .pipe(gulp.dest(path.outputTest))
+      .pipe(map(noop));
 });
 
 
@@ -51,10 +56,12 @@ gulp.task('build_deps', function() {
   for (var prop in path.deps) {
     gulp.src(path.deps[prop])
         .pipe(traceur(pipe.traceur()))
-        .pipe(gulp.dest(path.output+'/lib/' + prop));
+        .pipe(gulp.dest(path.output+'/lib/' + prop))
+        .pipe(map(noop));
   }
   gulp.src(path.depsCopy)
-        .pipe(gulp.dest(path.output+'/lib/'));
+        .pipe(gulp.dest(path.output+'/lib/'))
+        .pipe(map(noop));
 });
 
 gulp.task('build', ['build_source', 'build_deps', 'build_test']);
