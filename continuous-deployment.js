@@ -1,2 +1,2 @@
 var hookshot = require('hookshot');
-hookshot('refs/heads/dist', 'git fetch origin dist && git checkout origin/dist -f').listen(3000);
+hookshot('refs/heads/master', './scripts/continuous-deplyment.sh').listen(3000);

@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var pipe = require('pipe/gulp');
+var clean = require('gulp-clean');
 var connect = require('gulp-connect');
 var traceur = require('gulp-traceur');
 var through = require('through2');
@@ -32,7 +33,12 @@ var path = {
   outputTest: 'dist_test'
 };
 
-gulp.task('build_source', function() {
+gulp.task('clean', function() {
+  return gulp.src([path.output, path.outputTest], {read: false})
+      .pipe(clean());
+});
+
+gulp.task('build_source', ['clean'], function() {
   gulp.src(path.src)
       .pipe(traceur(pipe.traceur()))
       .pipe(gulp.dest(path.output));
@@ -40,14 +46,14 @@ gulp.task('build_source', function() {
       .pipe(gulp.dest(path.output));
 });
 
-gulp.task('build_test', function() {
+gulp.task('build_test', ['clean'], function() {
   gulp.src(path.test)
       .pipe(traceur(pipe.traceur({modules: 'inline', asyncFunctions: true})))
       .pipe(gulp.dest(path.outputTest));
 });
 
 
-gulp.task('build_deps', function() {
+gulp.task('build_deps', ['clean'], function() {
   for (var prop in path.deps) {
     gulp.src(path.deps[prop])
         .pipe(traceur(pipe.traceur()))
@@ -57,7 +63,7 @@ gulp.task('build_deps', function() {
         .pipe(gulp.dest(path.output+'/lib/'));
 });
 
-gulp.task('build', ['build_source', 'build_deps', 'build_test']);
+gulp.task('build', ['clean', 'build_source', 'build_deps', 'build_test']);
 
 
 // WATCH FILES FOR CHANGES
