@@ -2,7 +2,9 @@ describe('overview ', function () {
 
   beforeEach(function () {
     browser.get('index.html');
-    waitForAngular();
+    // TODO: replace this with a proper protractor/ng2.0 integration
+    // and remove this function as well as all method calls.
+    browser.driver.sleep(10000);
   });
 
   it('should show at least two github issues', () => {
@@ -50,7 +52,7 @@ describe('overview ', function () {
   // TODO: replace this with a proper protractor/ng2.0 integration
   // and remove this function as well as all method calls.
   function waitForAngular() {
-    browser.driver.sleep(15000);
+    browser.driver.sleep(2000);
   }
 
 });

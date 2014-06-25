@@ -25,4 +25,6 @@ config.multiCapabilities = [{
   'build': process.env.TRAVIS_BUILD_NUMBER
 }*/];
 
+config.jasmineNodeOpts.defaultTimeoutInterval = 60000;
+
 exports.config = config;

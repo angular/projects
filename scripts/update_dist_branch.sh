@@ -8,10 +8,9 @@ cd $SCRIPT_DIR/..
 # keep the .gitignore in the dist branch as well,
 # so we don't have to remove node_modules and bower_components folder
 # while switching...
-cp .gitignore dist
+cp .gitignore continuous-deployment.js dist
 branch=$(git rev-parse --abbrev-ref HEAD)
-# TODO: Use "dist" branch to serve via https://projects.angularjs.org/
-git checkout gh-pages
+git checkout dist
 git rm -rf .
 cp -rf dist/ .
 rm -rf dist
