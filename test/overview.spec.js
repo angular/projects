@@ -50,7 +50,7 @@ describe('overview ', function () {
   // TODO: replace this with a proper protractor/ng2.0 integration
   // and remove this function as well as all method calls.
   function waitForAngular() {
-    browser.driver.sleep(2000);
+    browser.driver.sleep(15000);
   }
 
 });
