@@ -33,6 +33,14 @@ respond to changes from `master`.
 1. Start the selenium server: `webdriver-manager start`
 1. `protractor protractor.conf.js`
 
+## Multi project development
+
+* call `scripts/dev-dep.sh` to replace a dependency in `node_modules` with a symlink.
+   E.g. `scripts/dev-dep.sh templating` will replace `node_modules/templating` with a symlink
+   to `../templating`. If that folder already exists it will just use it. Otherwise it will
+   clone `templating` from Github and store it there.
+* call `scripts/npm-dep.sh` to revert this change.
+
 ### Code Style Guide
 
 * Use 2 spaces as tab, see .editorconfig
