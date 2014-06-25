@@ -1,8 +1,8 @@
-#! /bin/sh
+#! /bin/bash
 SCRIPT_DIR=$(dirname $0)
 cd $SCRIPT_DIR/..
 
-function killServer () {
+function killServer {
   kill $serverPid
 }
 
