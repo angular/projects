@@ -13,7 +13,7 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 # TODO: Use "dist" branch to serve via https://projects.angularjs.org/
 git checkout gh-pages
 git rm -rf .
-cp -rf dist/* .
+cp -rf dist/ .
 rm -rf dist
 git add . -A
 # ||true if we had no changes
