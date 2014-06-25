@@ -1,6 +1,8 @@
 import {DecoratorDirective} from 'templating';
 import {Inject} from 'di';
 
+//TODO(eisenbergeffect): This is a placeholder directive, meant to be replaced when we have databinding of css classes.
+
 @DecoratorDirective({
   selector: '[ng-active]',
   bind: {

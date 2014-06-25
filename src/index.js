@@ -5,7 +5,7 @@ import {AppRouter} from 'router';
 export class App {
   constructor(router:AppRouter) {
     this.router = router;
-    this.router.configure((config)=>{
+    this.router.configure(config => {
       config.title = 'Angular Issues';
 
       config.map([

@@ -8,7 +8,7 @@ export class Detail {
     this.router = router;
     this.service = service;
 
-    this.router.configure((config)=>{
+    this.router.configure(config => {
       config.map([
         { pattern: ['','comments'], componentUrl: 'routes/comments', nav:true, title:'Comments' },
         { pattern: 'events',        componentUrl: 'routes/events',   nav:true }
