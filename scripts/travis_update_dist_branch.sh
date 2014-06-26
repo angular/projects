@@ -9,7 +9,7 @@ SCRIPT_DIR=$(dirname $0)
 echo -e "Publishing dist branch...\n"
 
 git config --global user.name "marry-poppins"
-$SCRIPT_DIR/update-dist-branch.sh
+$SCRIPT_DIR/update_dist_branch.sh
 
 git push -fq https://${GH_TOKEN}@github.com/angular/projects.git dist > /dev/null
 
