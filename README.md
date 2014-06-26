@@ -6,12 +6,12 @@ A Github client built with Angular 2
 
 ## Continuous Deployment
 
-```
-$ su www-data
-$ node continuous-deployment.js
-```
-Starts a server at port 3000 to
-respond to changes from `master`.
+Whenever a change is pushed to master, Travis runs the e2e tests
+and pushes the result of the build to the `dist` branch.
+
+The server behind `projects.angularjs.org` listens for changes to the `dist` branch
+(via a Webhook) and pulls them in to serve them. It uses the
+`continuous-deployment.js` node script to do that.
 
 ## Setup
 
