@@ -25,9 +25,7 @@ var path = {
     './node_modules/zone.js/zone.js',
     './node_modules/traceur/bin/traceur-runtime.js',
     './node_modules/requirejs/require.js',
-    './node_modules/route-recognizer/dist/route-recognizer.amd.js',
-    './bower_components/bootstrap/dist/css/bootstrap.min.css',
-    './bower_components/font-awesome/css/font-awesome.min.css'
+    './node_modules/route-recognizer/dist/route-recognizer.amd.js'
   ],
   output: 'dist',
   outputTest: 'dist_test'
