@@ -3,6 +3,8 @@ set -ex
 
 SCRIPT_DIR=$(dirname $0)
 cd $SCRIPT_DIR/..
+echo "Working directory: $(pwd)"
+echo "Result of build: $(ls dist)"
 
 [ "$TRAVIS_PULL_REQUEST" == "false" ]
 [ "$TRAVIS_BRANCH" == "master" ]
@@ -17,7 +19,7 @@ git config user.name "Marry Poppins"
 git config user.email "marry-poppins@angularjs.org"
 
 rm -rf *
-cp -rf ../dist/ .
+cp -rf ../dist/* .
 git add . -A
 git commit -m "update site from src" || true
 
