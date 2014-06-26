@@ -1,9 +1,13 @@
 var gulp = require('gulp');
 var pipe = require('pipe/gulp');
+
 var clean = require('gulp-clean');
 var connect = require('gulp-connect');
 var traceur = require('gulp-traceur');
-var through = require('through2');
+
+var runSequence = require('run-sequence');
+var mergeStreams = require('event-stream').merge;
+
 var ConfigParser = require('protractor/lib/configParser');
 var Runner = require('protractor/lib/runner');
 
@@ -36,42 +40,51 @@ gulp.task('clean', function() {
       .pipe(clean());
 });
 
-gulp.task('build_source', ['clean'], function() {
-  gulp.src(path.src)
-      .pipe(traceur(pipe.traceur()))
-      .pipe(gulp.dest(path.output));
-  gulp.src(path.srcCopy)
-      .pipe(gulp.dest(path.output));
+gulp.task('build_source', function() {
+  var assetStream = gulp.src(path.srcCopy)
+        .pipe(gulp.dest(path.output));
+  var sourceStream = gulp.src(path.src)
+        .pipe(traceur(pipe.traceur()))
+        .pipe(gulp.dest(path.output));
+  return mergeStreams(sourceStream, assetStream);
 });
 
-gulp.task('build_test', ['clean'], function() {
-  gulp.src(path.test)
+gulp.task('build_test', function() {
+  return gulp.src(path.test)
       .pipe(traceur(pipe.traceur({modules: 'inline', asyncFunctions: true})))
       .pipe(gulp.dest(path.outputTest));
 });
 
+var createDepStream = function(prop) {
+  return gulp.src(path.deps[prop])
+    .pipe(traceur(pipe.traceur()))
+    .pipe(gulp.dest(path.output+'/lib/' + prop));
+};
 
-gulp.task('build_deps', ['clean'], function() {
-  for (var prop in path.deps) {
-    gulp.src(path.deps[prop])
-        .pipe(traceur(pipe.traceur()))
-        .pipe(gulp.dest(path.output+'/lib/' + prop));
-  }
-  gulp.src(path.depsCopy)
+gulp.task('build_deps', function() {
+  var assetStream = gulp.src(path.depsCopy)
         .pipe(gulp.dest(path.output+'/lib/'));
+  var depStreams = Object.keys(path.deps).map(createDepStream);
+  var streams = depStreams.concat(assetStream);
+  return mergeStreams.apply(null, streams);
 });
 
-gulp.task('build', ['clean', 'build_source', 'build_deps', 'build_test']);
-
+gulp.task('build', function(done) {
+  // By using runSequence here we are decoupling the cleaning from the rest of the build tasks
+  // Otherwise, we have to add clean as a dependency on every task to ensure that it completes
+  // before they begin.
+  runSequence(
+    'clean',
+    ['build_source', 'build_deps', 'build_test'],
+    done
+  );
+});
 
 // WATCH FILES FOR CHANGES
 gulp.task('watch', function() {
   gulp.watch([path.src, path.srcCopy], ['build_source']);
   gulp.watch([path.test], ['build_test']);
-  var deps = [];
-  for (var prop in path.deps) {
-    deps.push(path.deps[prop]);
-  }
+  var deps = Object.keys(path.deps).map(function(key) { return path.deps[key]; });
   gulp.watch([deps], ['build_deps']);
 });
 
