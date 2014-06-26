@@ -8,7 +8,11 @@ define([], function() {
         xhr.open('GET', url, false);
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4) {
-            resolve(JSON.parse(xhr.responseText));
+            if (xhr.status === 200) {
+              resolve(JSON.parse(xhr.responseText));
+            } else {
+              reject(new Error(xhr.statusText));
+            }
           }
         };
         xhr.send();
