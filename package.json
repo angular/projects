@@ -27,7 +27,7 @@
     "zone.js": "angular/zone.js",
     "router": "angular/router",
     "traceur": "vojtajina/traceur-compiler#add-es6-pure-transformer-dist",
-    "templating": "angular/templating#custom-element",
+    "templating": "angular/templating",
     "route-recognizer": "^0.1.0",
     "es6-shim": "0.9.3"
   },
@@ -48,6 +48,7 @@
     "karma-traceur-preprocessor": "vojtajina/karma-traceur-preprocessor#traceur-as-peer",
     "pipe": "angular/pipe#remove-transitive-deps",
     "protractor": "~1.0.0",
+    "jasmine-reporters": "~0.2.1",
     "requirejs": "^2.1.11",
     "rtts-assert": "angular/assert",
     "run-sequence": "^0.3.6"

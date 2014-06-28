@@ -8,9 +8,6 @@ var traceur = require('gulp-traceur');
 var runSequence = require('run-sequence');
 var mergeStreams = require('event-stream').merge;
 
-var ConfigParser = require('protractor/lib/configParser');
-var Runner = require('protractor/lib/runner');
-
 var path = {
   src: ['./src/**/*.js'],
   srcCopy: ['./src/**/*.html', './src/**/*.css'],
@@ -20,7 +17,7 @@ var path = {
     'expressionist': './node_modules/expressionist/src/**/*.js',
     'di': './node_modules/di/src/**/*.js',
     'rtts-assert': './node_modules/rtts-assert/src/**/*.js',
-    'templating': './node_modules/templating/src/**/*.js',
+    'templating': './node_modules/templating/src/lib/**/*.js',
     'router': './node_modules/router/src/**/*.js'
   },
   depsCopy: [
@@ -95,16 +92,3 @@ gulp.task('serve', connect.server({
   livereload: false,
   open: false
 }));
-
-gulp.task('e2e', ['serve'], function() {
-  var configParser = new ConfigParser();
-  configParser.addFileConfig('protractor.conf.js');
-  var config = configParser.getConfig();
-  config.specs = ['dist_test/**/*.js'];
-  var runner = new Runner(config);
-  runner.run().then(function(exitCode) {
-    // TODO
-  }).catch(function(err) {
-    // TODO
-  });
-});

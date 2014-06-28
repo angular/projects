@@ -11,6 +11,7 @@ exports.config = {
     // TODO: Implement a proper debugging API for ng2.0, remove this here
     // and the sleeps in all tests.
     browser.ignoreSynchronization = true;
+    global.SLEEP_INTERVAL = process.env.TRAVIS ? 6000 : 1000;
   },
 
   jasmineNodeOpts: {

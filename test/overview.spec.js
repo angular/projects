@@ -2,9 +2,7 @@ describe('overview ', function () {
 
   beforeEach(function () {
     browser.get('index.html');
-    // TODO: replace this with a proper protractor/ng2.0 integration
-    // and remove this function as well as all method calls.
-    browser.driver.sleep(10000);
+    waitForLoad();
   });
 
   it('should show at least two github issues', () => {
@@ -37,7 +35,7 @@ describe('overview ', function () {
 
     goToFirstIssueDetail();
     element.all(by.css('.tst-tab-link')).get(1).click();
-    waitForAngular();
+    waitForLoad();
 
     expect(element.all(by.css('.tst-viewport comments')).count()).toBe(0);
     expect(element.all(by.css('.tst-viewport events')).count()).toBe(1);
@@ -46,13 +44,13 @@ describe('overview ', function () {
 
   function goToFirstIssueDetail() {
     element.all(by.css('.tst-issue-link')).get(0).click();
-    waitForAngular();
+    waitForLoad();
   }
 
   // TODO: replace this with a proper protractor/ng2.0 integration
   // and remove this function as well as all method calls.
-  function waitForAngular() {
-    browser.driver.sleep(2000);
+  function waitForLoad() {
+    browser.driver.sleep(SLEEP_INTERVAL);
   }
 
 });
