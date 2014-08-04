@@ -11,8 +11,6 @@ echo "Result of build: $(ls dist)"
 
 echo -e "Publishing dist branch...\n"
 
-SOURCE_SHA=$(git rev-parse --short HEAD)
-
 rm -fr temp
 git clone https://github.com/angular/projects.git -b dist temp
 cd temp
@@ -25,14 +23,9 @@ cp -rf ../dist/* .
 git add . -A
 git commit -m "update site from src" || true
 
-echo "Tagging with sha $SOURCE_SHA"
-TAGNAME="dist-$SOURCE_SHA"
-git tag $TAGNAME
-
 echo "Pushing..."
 # Make sure we don't log the GH_TOKEN in any case!
 set +x
 git push -fq https://${GH_TOKEN}@github.com/angular/projects.git dist >/dev/null 2>&1
-git push -fq https://${GH_TOKEN}@github.com/angular/projects.git $TAGNAME >/dev/null 2>&1
 
 echo -e "Published build to dist branch.\n"
