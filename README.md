@@ -40,6 +40,7 @@ The server behind `projects.angularjs.org` listens for changes to the `dist` bra
    to `../templating`. If that folder already exists it will just use it. Otherwise it will
    clone `templating` from Github and store it there.
 * call `scripts/npm-dep.sh` to revert this change.
+* when dependencies changed, increment the counter in `FORCE_BUILD` to force a build
 
 ### Code Style Guide
 
